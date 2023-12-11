@@ -10,11 +10,12 @@ for j in range(10):
     N = 20  # number of genes
     P = 100  # size of population
     MUTRATE = 0.12 #mutation rate
-    MUTSTEP = 0.9 #mutation step
-    MAX = 10
+    MUTSTEP = 0.9#mutation step
     MIN = -10
-    #max for the second function
-    #MAX = -5
+    MAX = 10
+    #MIN = -5 #max for the second function
+    #MAX = 32.768 #max for the third function
+    #MIN = -32.768 #min for the third function
     maxGeneration = 100 #Number of generations
     eliteSize = 1  # Number of elites to be retained in each generation
     tournament_size = 40  # Tournament size
@@ -38,6 +39,8 @@ for j in range(10):
         newind = individual()
         newind.gene = tempgene.copy()
         population.append(newind)
+        
+    
     
     # the function below is the test function for the first function    
     def test_function(ind):
@@ -48,9 +51,9 @@ for j in range(10):
         utility = utility + ((ind.gene[0] - 1)**2)
         return utility   
     
-    
-    #the function below is the test function for the second function
     """
+    #the function below is the test function for the second function
+
     def test_function(ind):
         utility1 = 0
         utility2 = 0
@@ -58,6 +61,17 @@ for j in range(10):
             utility1 += (ind.gene[i]**2)
             utility2 += (0.5 * (i+1) * ind.gene[i])
         return (utility1 + (utility2**2) + (utility2**4))
+        
+    #The function below is the test function for the third function
+        def test_function(ind):
+        term1 = 0
+        term2 = 0
+        for i in range(N):
+            term1 += ind.gene[i] ** 2
+            term2 += math.cos(2.0 * math.pi * ind.gene[i])
+        utility1 = -20.0 * math.exp(-0.2 * math.sqrt(0.05 * term1))
+        utility2 = -math.exp(0.05 * term2)
+        return utility1 + utility2 + 20.0 + math.exp(1)
 """
     for i in range(P):
         population[i].fitness = test_function(population[i])
